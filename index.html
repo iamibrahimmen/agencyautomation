@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="AgencyAutomation — We build AI-powered automation systems that save businesses 20+ hours per week, triple their leads, and run 24/7 without staff. n8n, WhatsApp bots, CRM integration, and more." />
-  <meta name="keywords" content="AI automation agency, n8n automation, WhatsApp bot, lead generation AI, CRM automation, chatbot agency" />
+  <meta name="description" content="AgencyAutomation — We build AI-powered automation systems that save businesses 20+ hours per week, triple their leads, and run 24/7 without staff. WhatsApp bots, CRM integration, and more." />
+  <meta name="keywords" content="AI automation agency, WhatsApp bot, lead generation AI, CRM automation, chatbot agency" />
   <meta name="author" content="MD Ibrahim Khalil" />
   <meta property="og:title" content="AgencyAutomation — AI Systems That Work While You Sleep" />
   <meta property="og:description" content="We build AI automation for dental clinics, real estate, e-commerce, restaurants, gyms, and any business ready to scale." />
@@ -215,15 +215,15 @@ section { padding: 7rem 0; position: relative; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  padding: 1.25rem 0;
+  padding: 1.1rem 0;
   transition: var(--transition);
 }
 #navbar.scrolled {
-  background: rgba(10,10,15,0.9);
+  background: rgba(10,10,15,0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
-  padding: 0.85rem 0;
+  padding: 0.8rem 0;
 }
 .nav-inner {
   display: flex;
@@ -232,29 +232,79 @@ section { padding: 7rem 0; position: relative; }
 }
 .nav-logo {
   font-family: var(--font-head);
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  color: var(--text);
+  text-transform: uppercase;
 }
 .nav-logo span { color: var(--purple); }
-.nav-logo .dot { color: var(--cyan); font-size: 1.5rem; line-height: 0; }
+.nav-logo .dot { display: none; }
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2.5rem;
+  gap: 0.25rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
 }
 .nav-links a {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
+  font-family: var(--font-head);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--text-muted);
-  transition: color var(--transition);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  transition: all 0.2s ease;
 }
-.nav-links a:hover { color: var(--text); }
-.nav-cta { display: flex; align-items: center; gap: 1rem; }
+.nav-links a:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.08);
+}
+.nav-links a.active {
+  color: var(--purple);
+  background: rgba(123,47,255,0.15);
+}
+.nav-cta { display: flex; align-items: center; gap: 0.75rem; }
+.nav-cta .btn-outline {
+  font-family: var(--font-head);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 999px;
+  padding: 0.55rem 1.4rem !important;
+  color: var(--text);
+  background: transparent;
+  transition: all 0.2s ease;
+}
+.nav-cta .btn-outline:hover {
+  border-color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.05);
+}
+.nav-cta .btn-primary {
+  font-family: var(--font-head);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--purple);
+  border-radius: 999px;
+  padding: 0.55rem 1.4rem !important;
+  color: #fff;
+  transition: all 0.2s ease;
+}
+.nav-cta .btn-primary:hover {
+  background: #9b5aff;
+  transform: translateY(-1px);
+}
 .hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
 .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--text); transition: var(--transition); }
 
@@ -1358,7 +1408,7 @@ section { padding: 7rem 0; position: relative; }
   <div class="container">
     <div class="nav-inner">
       <a href="#" class="nav-logo">
-        <span>Agency</span>Automation<span class="dot">.</span>
+        <span>Agency</span>Automation
       </a>
       <div class="nav-links">
         <a href="#industries">Industries</a>
@@ -1390,7 +1440,7 @@ section { padding: 7rem 0; position: relative; }
     <div class="hero-inner">
       <div class="hero-badge">
         <div class="pulse"></div>
-        AI Automation Agency &nbsp;·&nbsp; n8n Certified Systems
+        AI Automation Agency
       </div>
       <h1 class="hero-title glitch" data-text="AI Systems That Work">
         AI Systems That Work
@@ -1741,7 +1791,7 @@ section { padding: 7rem 0; position: relative; }
       <div class="step-item">
         <div class="step-num">02</div>
         <h4>System Build</h4>
-        <p>Our team builds your AI system using n8n — connecting your tools, training the AI on your business, and testing every workflow.</p>
+        <p>Our team builds your AI system — connecting your tools, training the AI on your business, and testing every workflow.</p>
       </div>
       <div class="step-item">
         <div class="step-num">03</div>
@@ -1942,7 +1992,7 @@ section { padding: 7rem 0; position: relative; }
 
       <div class="faq-item">
         <div class="faq-question">
-          <span class="faq-q-text">Do I need to know how to code or use n8n?</span>
+          <span class="faq-q-text">Do I need to know how to code or use any technical tools?</span>
           <span class="faq-arrow">▼</span>
         </div>
         <div class="faq-answer">
@@ -1966,7 +2016,7 @@ section { padding: 7rem 0; position: relative; }
           <span class="faq-arrow">▼</span>
         </div>
         <div class="faq-answer">
-          <div class="faq-answer-inner">We connect to WhatsApp, Gmail, Google Sheets, HubSpot, GoHighLevel, Shopify, Facebook/Instagram, Calendly, Notion, Slack, Stripe, and 400+ more platforms via n8n. If your tool has an API or webhook, we can automate it.</div>
+          <div class="faq-answer-inner">We connect to WhatsApp, Gmail, Google Sheets, HubSpot, GoHighLevel, Shopify, Facebook/Instagram, Calendly, Notion, Slack, Stripe, and 400+ more platforms. If your tool has an API or webhook, we can automate it.</div>
         </div>
       </div>
 
@@ -1986,7 +2036,7 @@ section { padding: 7rem 0; position: relative; }
           <span class="faq-arrow">▼</span>
         </div>
         <div class="faq-answer">
-          <div class="faq-answer-inner">Starter clients get 30-day support. Growth clients get ongoing support as part of the monthly retainer. Enterprise clients get 24/7 SLA monitoring. In our experience, well-built n8n systems are extremely stable — but when something does go wrong, we fix it fast.</div>
+          <div class="faq-answer-inner">Starter clients get 30-day support. Growth clients get ongoing support as part of the monthly retainer. Enterprise clients get 24/7 SLA monitoring. Our systems are built for stability — but when something does go wrong, we fix it fast.</div>
         </div>
       </div>
 
@@ -2038,7 +2088,7 @@ section { padding: 7rem 0; position: relative; }
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="nav-logo" style="margin-bottom:1rem;">
-          <span>Agency</span>Automation<span class="dot">.</span>
+          <span>Agency</span>Automation
         </div>
         <p>We build AI automation systems that save businesses 20+ hours per week, triple their leads, and run 24/7 without additional staff.</p>
         <div class="footer-social">
@@ -2084,7 +2134,7 @@ section { padding: 7rem 0; position: relative; }
         © 2025 AgencyAutomation. All rights reserved. Built by MD Ibrahim Khalil.
       </div>
       <div class="footer-made">
-        Powered by <span>n8n</span> &nbsp;·&nbsp; Hosted on <span>GitHub Pages</span>
+        Hosted on <span>GitHub Pages</span>
       </div>
     </div>
   </div>
