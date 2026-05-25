@@ -2844,7 +2844,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
 (function() {
-  const OPENAI_KEY = "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";
+  // ─────────────────────────────────────────────────────────────
+  //  FREE GROQ API — Get your key at https://console.groq.com
+  //  Sign up is FREE, no credit card needed.
+  //  Replace the value below with your own Groq API key.
+  // ─────────────────────────────────────────────────────────────
+  const GROQ_KEY = "YOUR_GROQ_API_KEY_HERE"; // 👈 paste your key here
 
   const SYSTEM_PROMPT = `You are AgencyAI, the friendly and knowledgeable assistant for AgencyAutomation (agencyautomation.site).
 
@@ -2875,16 +2880,16 @@ RESULTS CLIENTS SEE: 20+ hrs/week saved, 3x lead increase, 60% no-show reduction
 TONE: Confident, concise, professional. Use bullet points for lists. Always end with a relevant CTA (book a call or contact). Never invent prices or guarantees beyond what's stated.`;
 
   // DOM
-  const btn       = document.getElementById('chatbot-btn');
-  const panel     = document.getElementById('chatbot-panel');
-  const closeBtn  = document.getElementById('chat-close');
-  const msgBox    = document.getElementById('chat-messages');
-  const input     = document.getElementById('chat-input');
-  const sendBtn   = document.getElementById('chat-send');
-  const notif     = btn.querySelector('.notif');
+  const btn      = document.getElementById('chatbot-btn');
+  const panel    = document.getElementById('chatbot-panel');
+  const closeBtn = document.getElementById('chat-close');
+  const msgBox   = document.getElementById('chat-messages');
+  const input    = document.getElementById('chat-input');
+  const sendBtn  = document.getElementById('chat-send');
+  const notif    = btn.querySelector('.notif');
 
-  let isOpen = false;
-  let history = []; // {role, content}
+  let isOpen  = false;
+  let history = [];
 
   function toggleChat() {
     isOpen = !isOpen;
@@ -2911,8 +2916,19 @@ TONE: Confident, concise, professional. Use bullet points for lists. Always end 
   }
   function hideTyping() { const t = document.getElementById('typing-indicator'); if (t) t.remove(); }
 
+  function formatReply(text) {
+    return text
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/^#{1,3}\s(.+)$/gm, '<strong>$1</strong>')
+      .replace(/^[-•]\s(.+)$/gm, '• $1')
+      .replace(/\n/g, '<br>');
+  }
+
   async function sendMessage(text) {
-    if (!text.trim()) return;
+    text = text.trim();
+    if (!text) return;
+
     document.querySelectorAll('.chat-quick-replies').forEach(e => e.remove());
     appendMsg(text, 'user');
     input.value = ''; input.style.height = 'auto';
@@ -2920,16 +2936,25 @@ TONE: Confident, concise, professional. Use bullet points for lists. Always end 
     showTyping();
     sendBtn.disabled = true;
 
+    // Guard: key not set yet
+    if (!GROQ_KEY || GROQ_KEY === 'YOUR_GROQ_API_KEY_HERE') {
+      hideTyping();
+      appendMsg("⚙️ Chatbot not configured yet. <br>Owner: please add your free Groq API key. Get one free at <a href='https://console.groq.com' target='_blank' style='color:var(--cyan)'>console.groq.com</a>", 'bot');
+      sendBtn.disabled = false;
+      return;
+    }
+
     try {
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + OPENAI_KEY
+          'Authorization': 'Bearer ' + GROQ_KEY
         },
         body: JSON.stringify({
-          model: 'gpt-4o-mini',
-          max_tokens: 500,
+          model: 'llama3-70b-8192',   // Best free Groq model — very human-like
+          max_tokens: 600,
+          temperature: 0.7,
           messages: [
             { role: 'system', content: SYSTEM_PROMPT },
             ...history
@@ -2937,23 +2962,26 @@ TONE: Confident, concise, professional. Use bullet points for lists. Always end 
         })
       });
 
-      const data = await res.json();
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData?.error?.message || 'API error ' + res.status);
+      }
+
+      const data  = await res.json();
       const reply = data.choices?.[0]?.message?.content
         || "Something went wrong — reach us at agencyautomationn@gmail.com";
 
       history.push({ role: 'assistant', content: reply });
-
-      // Format: convert **bold** and newlines
-      const formatted = reply
-        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\n/g, '<br>');
-
       hideTyping();
-      appendMsg(formatted, 'bot');
+      appendMsg(formatReply(reply), 'bot');
 
     } catch (err) {
       hideTyping();
-      appendMsg("Connection issue. Please try again or <a href='mailto:agencyautomationn@gmail.com' style='color:var(--cyan)'>email us directly</a>.", 'bot');
+      console.error('AgencyAI error:', err.message);
+      appendMsg(
+        "Connection issue. Please try again or <a href='mailto:agencyautomationn@gmail.com' style='color:var(--cyan)'>email us directly</a>.",
+        'bot'
+      );
     }
 
     sendBtn.disabled = false;
