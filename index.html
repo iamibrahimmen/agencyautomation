@@ -431,27 +431,32 @@ section { padding: 7rem 0; position: relative; }
 #marquee {
   position: relative;
   overflow: hidden;
-  height: 90px;
+  height: 140px;
   margin: 0;
   z-index: 5;
+  background: transparent;
 }
 .marquee-band {
   position: absolute;
-  left: -5%;
-  right: -5%;
+  left: -8%;
+  right: -8%;
   top: 50%;
-  transform: translateY(-50%) rotate(-2.5deg);
-  background: linear-gradient(90deg, #7B2FFF 0%, #C0336B 45%, #FF4444 75%, #FF6B35 100%);
+  transform: translateY(-50%) rotate(-2.8deg);
+  background: linear-gradient(90deg, #7B2FFF 0%, #A8285A 35%, #D93A3A 60%, #FF5533 85%, #FF6B20 100%);
   padding: 0;
-  box-shadow: 0 8px 40px rgba(123,47,255,0.4), 0 4px 20px rgba(255,68,68,0.3);
+  box-shadow:
+    0 12px 50px rgba(123,47,255,0.5),
+    0 4px 30px rgba(255,60,60,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    inset 0 -1px 0 rgba(0,0,0,0.2);
   overflow: hidden;
 }
 .marquee-track {
   display: flex;
   gap: 0;
   width: max-content;
-  animation: marquee-scroll 30s linear infinite;
-  padding: 0.85rem 0;
+  animation: marquee-scroll 28s linear infinite;
+  padding: 1.1rem 0;
 }
 .marquee-track:hover { animation-play-state: paused; }
 @keyframes marquee-scroll {
@@ -461,31 +466,37 @@ section { padding: 7rem 0; position: relative; }
 .marquee-item {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  padding: 0 1.8rem;
+  gap: 1rem;
+  padding: 0 2rem;
   font-family: var(--font-head);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #fff;
   white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 .marquee-item .icon { display: none; }
 .marquee-sep { display: none; }
 .marquee-star {
-  color: rgba(255,255,255,0.9);
-  font-size: 1.1rem;
+  color: rgba(255,255,255,0.95);
+  font-size: 0.85rem;
   flex-shrink: 0;
-  filter: drop-shadow(0 0 4px rgba(255,255,255,0.6));
-  animation: star-pulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.8));
+  animation: star-pulse 2.5s ease-in-out infinite;
+  display: inline-block;
 }
 @keyframes star-pulse {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(0.85); }
+  0%,100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  50% { opacity: 0.7; transform: scale(0.8) rotate(45deg); }
 }
 
-/* ── Section Animated Backgrounds ── */
+/* ══════════════════════════════════════════
+   SECTION ANIMATED BACKGROUNDS — UNIQUE PER SECTION
+══════════════════════════════════════════ */
+
+/* ── INDUSTRIES: Cyan hex grid + floating orbs ── */
 #industries {
   background: var(--bg);
   position: relative;
@@ -496,18 +507,32 @@ section { padding: 7rem 0; position: relative; }
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 20% 50%, rgba(0,245,255,0.05) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 80% 30%, rgba(123,47,255,0.06) 0%, transparent 60%);
-  animation: sectionPulse1 8s ease-in-out infinite alternate;
+    radial-gradient(ellipse 70% 50% at 15% 40%, rgba(0,245,255,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 70% at 85% 60%, rgba(123,47,255,0.09) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 10%, rgba(0,245,255,0.04) 0%, transparent 50%);
+  animation: industriesBg 9s ease-in-out infinite alternate;
   pointer-events: none;
+  z-index: 0;
+}
+@keyframes industriesBg {
+  0%   { transform: scale(1)   translateX(0px); opacity: 0.7; }
+  50%  { transform: scale(1.05) translateX(15px); opacity: 1; }
+  100% { transform: scale(1)   translateX(-10px); opacity: 0.8; }
 }
 #industries .hex-grid {
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V18L28 2l28 16v32L28 66zM28 98L0 82V50l28-16 28 16v32L28 98z' fill='none' stroke='rgba(123,47,255,0.04)' stroke-width='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V18L28 2l28 16v32L28 66zM28 98L0 82V50l28-16 28 16v32L28 98z' fill='none' stroke='rgba(0,245,255,0.06)' stroke-width='1'/%3E%3C/svg%3E");
+  animation: hexFloat 20s linear infinite;
   pointer-events: none;
+  z-index: 0;
+}
+@keyframes hexFloat {
+  from { background-position: 0 0; }
+  to   { background-position: 56px 100px; }
 }
 
+/* ── SERVICES: Matrix scanlines + purple bloom ── */
 #services {
   background: var(--bg);
   position: relative;
@@ -517,27 +542,38 @@ section { padding: 7rem 0; position: relative; }
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 100% 50% at 50% 100%, rgba(123,47,255,0.07) 0%, transparent 60%);
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 110%, rgba(123,47,255,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 10% 20%, rgba(123,47,255,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse 30% 30% at 90% 80%, rgba(0,245,255,0.05) 0%, transparent 50%);
+  animation: servicesBg 11s ease-in-out infinite alternate;
   pointer-events: none;
+  z-index: 0;
+}
+@keyframes servicesBg {
+  0%   { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 1;   transform: scale(1.08); }
 }
 #services .scan-lines {
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
     0deg,
-    transparent,
-    transparent 3px,
-    rgba(0,245,255,0.012) 3px,
-    rgba(0,245,255,0.012) 4px
+    transparent 0px,
+    transparent 2px,
+    rgba(123,47,255,0.025) 2px,
+    rgba(123,47,255,0.025) 3px
   );
-  animation: scanMove 12s linear infinite;
+  animation: scanMove 8s linear infinite;
   pointer-events: none;
+  z-index: 0;
 }
 @keyframes scanMove {
-  from { background-position: 0 0; }
-  to { background-position: 0 100px; }
+  from { transform: translateY(0); }
+  to   { transform: translateY(60px); }
 }
 
+/* ── RESULTS: Gold circuit + radial pulse ── */
 #results {
   background: var(--bg);
   position: relative;
@@ -548,21 +584,31 @@ section { padding: 7rem 0; position: relative; }
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle 600px at 50% 50%, rgba(200,169,110,0.04) 0%, transparent 70%);
-  animation: goldPulse 6s ease-in-out infinite alternate;
+    radial-gradient(circle 700px at 50% 50%, rgba(200,169,110,0.07) 0%, transparent 65%),
+    radial-gradient(circle 300px at 15% 80%, rgba(200,169,110,0.05) 0%, transparent 50%),
+    radial-gradient(circle 300px at 85% 20%, rgba(200,169,110,0.04) 0%, transparent 50%);
+  animation: resultsPulse 7s ease-in-out infinite alternate;
   pointer-events: none;
+  z-index: 0;
 }
-@keyframes goldPulse {
-  0% { opacity: 0.5; transform: scale(1); }
-  100% { opacity: 1; transform: scale(1.1); }
+@keyframes resultsPulse {
+  0%   { opacity: 0.5; transform: scale(0.96); }
+  100% { opacity: 1;   transform: scale(1.04); }
 }
 #results .circuit-bg {
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect x='10' y='10' width='80' height='80' rx='2' fill='none' stroke='rgba(200,169,110,0.04)' stroke-width='1'/%3E%3Ccircle cx='10' cy='10' r='3' fill='rgba(200,169,110,0.06)'/%3E%3Ccircle cx='90' cy='10' r='3' fill='rgba(200,169,110,0.06)'/%3E%3Ccircle cx='10' cy='90' r='3' fill='rgba(200,169,110,0.06)'/%3E%3Ccircle cx='90' cy='90' r='3' fill='rgba(200,169,110,0.06)'/%3E%3Cline x1='50' y1='10' x2='50' y2='90' stroke='rgba(200,169,110,0.03)' stroke-width='1'/%3E%3Cline x1='10' y1='50' x2='90' y2='50' stroke='rgba(200,169,110,0.03)' stroke-width='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect x='8' y='8' width='64' height='64' rx='2' fill='none' stroke='rgba(200,169,110,0.06)' stroke-width='1'/%3E%3Ccircle cx='8' cy='8' r='3' fill='rgba(200,169,110,0.08)'/%3E%3Ccircle cx='72' cy='8' r='3' fill='rgba(200,169,110,0.08)'/%3E%3Ccircle cx='8' cy='72' r='3' fill='rgba(200,169,110,0.08)'/%3E%3Ccircle cx='72' cy='72' r='3' fill='rgba(200,169,110,0.08)'/%3E%3Cline x1='40' y1='8' x2='40' y2='72' stroke='rgba(200,169,110,0.04)' stroke-width='1' stroke-dasharray='4 4'/%3E%3Cline x1='8' y1='40' x2='72' y2='40' stroke='rgba(200,169,110,0.04)' stroke-width='1' stroke-dasharray='4 4'/%3E%3C/svg%3E");
+  animation: circuitDrift 25s linear infinite;
   pointer-events: none;
+  z-index: 0;
+}
+@keyframes circuitDrift {
+  from { background-position: 0 0; }
+  to   { background-position: 80px 80px; }
 }
 
+/* ── FAQ: Dual-tone aurora + dot matrix ── */
 #faq {
   background: var(--bg);
   position: relative;
@@ -573,26 +619,73 @@ section { padding: 7rem 0; position: relative; }
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 0% 50%, rgba(123,47,255,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 60% at 100% 50%, rgba(0,245,255,0.04) 0%, transparent 50%);
-  animation: faqShift 10s ease-in-out infinite alternate;
+    radial-gradient(ellipse 70% 80% at -10% 50%, rgba(123,47,255,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 70% at 110% 50%, rgba(0,245,255,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 0%, rgba(123,47,255,0.05) 0%, transparent 60%);
+  animation: faqAurora 12s ease-in-out infinite alternate;
   pointer-events: none;
+  z-index: 0;
 }
-@keyframes faqShift {
-  0% { opacity: 0.6; }
-  100% { opacity: 1; }
+@keyframes faqAurora {
+  0%   { opacity: 0.5; transform: scaleX(1); }
+  50%  { opacity: 1;   transform: scaleX(1.05); }
+  100% { opacity: 0.7; transform: scaleX(0.97); }
 }
 #faq .dot-matrix {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, rgba(123,47,255,0.08) 1px, transparent 1px);
-  background-size: 30px 30px;
+  background-image: radial-gradient(circle, rgba(123,47,255,0.1) 1px, transparent 1px);
+  background-size: 28px 28px;
   pointer-events: none;
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+  z-index: 0;
+  animation: dotDrift 30s linear infinite;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 30%, transparent 100%);
+}
+@keyframes dotDrift {
+  from { background-position: 0 0; }
+  to   { background-position: 28px 28px; }
 }
 
-@keyframes sectionPulse1 {
-  0% { opacity: 0.6; }
+/* ── CTA: Deep purple vortex ── */
+#cta {
+  position: relative;
+  overflow: hidden;
+}
+#cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 50% 50%, rgba(123,47,255,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 30% at 20% 30%, rgba(0,245,255,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 30% 30% at 80% 70%, rgba(200,169,110,0.05) 0%, transparent 50%);
+  animation: ctaVortex 14s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes ctaVortex {
+  0%   { opacity: 0.6; transform: scale(1) rotate(0deg); }
+  100% { opacity: 1;   transform: scale(1.1) rotate(1deg); }
+}
+
+/* ── HOW IT WORKS: Grid + teal diagonal ── */
+#how-it-works {
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+#how-it-works::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(0,245,255,0.04) 0%, transparent 50%, rgba(123,47,255,0.04) 100%);
+  animation: howBg 10s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes howBg {
+  0%   { opacity: 0.5; }
   100% { opacity: 1; }
 }
 
@@ -2751,199 +2844,123 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
 (function() {
-  // ── Knowledge Base ──
-  const KB = [
-    {
-      keys: ['service','what do you','what you offer','what can you','automation','offer','capabilities','provide','build','do for'],
-      reply: `We build <strong>10 types of AI automation systems</strong>:<br><br>
-• <strong>Lead Generation AI</strong> — Scrape, score & nurture leads on autopilot<br>
-• <strong>WhatsApp Automation</strong> — 24/7 bot that qualifies leads & books appointments<br>
-• <strong>CRM Integration</strong> — Connect HubSpot, GoHighLevel & 400+ tools<br>
-• <strong>AI Sales Chatbots</strong> — Website bots that handle objections & close leads<br>
-• <strong>Cold Email Systems</strong> — Personalized outreach at scale with AI-written emails<br>
-• <strong>Workflow Automation</strong> — End-to-end business process automation<br>
-• <strong>Review Management</strong> — Auto-request Google reviews after every job<br>
-• <strong>Appointment Booking</strong> — Smart scheduling, zero back-and-forth<br>
-• <strong>Cart Recovery</strong> — Automated follow-up for abandoned carts<br>
-• <strong>Document Automation</strong> — Auto-generate proposals, contracts & invoices<br><br>
-Want to know which one fits your business? 👉 <a href="mailto:agencyautomationn@gmail.com" style="color:var(--cyan)">Book a free call</a>`
-    },
-    {
-      keys: ['how long','how fast','timeline','days','live','go live','delivery','quick','speed'],
-      reply: `We move fast ⚡<br><br>
-• <strong>Most systems go live in 7–14 days</strong><br>
-• Simple automations: 7 days<br>
-• Complex multi-workflow builds: up to 14 days<br>
-• Enterprise scope: custom timeline (discussed on discovery call)<br><br>
-We handle the entire build, setup, testing, and launch — you just review and approve.<br><br>
-Ready to start? <a href="mailto:agencyautomationn@gmail.com" style="color:var(--cyan)">Book your free strategy call →</a>`
-    },
-    {
-      keys: ['code','technical','coding','developer','skill','knowledge','tech','experience'],
-      reply: `<strong>Zero technical knowledge required.</strong> 🙅<br><br>
-We handle:<br>
-• Full system build & configuration<br>
-• Testing & quality assurance<br>
-• Deployment & go-live<br>
-• Documentation & handover<br><br>
-You get a fully live system with simple controls. If anything breaks, you message us and we fix it — fast.<br><br>
-Your job is to run your business. Ours is to automate it.`
-    },
-    {
-      keys: ['tools','connect','integration','platform','software','crm','hubspot','shopify','whatsapp','gmail','slack','stripe','calendly','notion'],
-      reply: `We connect to <strong>400+ platforms</strong> including:<br><br>
-WhatsApp · Gmail · Google Sheets · HubSpot · GoHighLevel · Shopify · Facebook/Instagram · Calendly · Notion · Slack · Stripe · Zapier · Make · n8n · Airtable · Twilio · and hundreds more.<br><br>
-<strong>Simple rule:</strong> if your tool has an API or webhook, we can automate it. 🔗`
-    },
-    {
-      keys: ['industry','dental','real estate','restaurant','gym','fitness','ecommerce','e-commerce','clinic','business','who','niche'],
-      reply: `We work with businesses across <strong>6 core industries</strong>:<br><br>
-• 🦷 <strong>Dental Clinics</strong> — Appointment booking, review automation, no-show reduction<br>
-• 🏠 <strong>Real Estate</strong> — Lead scoring, follow-up sequences, CRM automation<br>
-• 🛒 <strong>E-Commerce</strong> — Cart recovery, product follow-ups, customer support bots<br>
-• 🍽️ <strong>Restaurants</strong> — WhatsApp reservations, review management, loyalty follow-ups<br>
-• 💪 <strong>Gyms & Fitness</strong> — Lead qualification, class booking, retention automation<br>
-• ⚙️ <strong>Any Business</strong> — If you have leads, customers, or repetitive tasks — we automate it<br><br>
-Which industry are you in?`
-    },
-    {
-      keys: ['own','ownership','lock','contract','mine','keep','access'],
-      reply: `<strong>You own 100% of everything we build.</strong> 🔒<br><br>
-• Full access to all workflows<br>
-• All credentials stay with you<br>
-• Complete documentation included<br>
-• Zero lock-in contracts<br><br>
-We can provide ongoing optimization as an optional add-on — but you're never forced to stay. The system is yours, forever.`
-    },
-    {
-      keys: ['price','cost','how much','plan','package','investment','fee','charge','pay'],
-      reply: `Pricing is scoped to your specific business needs — there's no one-size-fits-all.<br><br>
-The best way to get an accurate number is a <strong>free 30-minute strategy call</strong> where we map exactly what you need and what it costs.<br><br>
-📧 <a href="mailto:agencyautomationn@gmail.com" style="color:var(--cyan)">agencyautomationn@gmail.com</a><br>
-💬 <a href="https://wa.me/8801320723300" target="_blank" style="color:#25D366">WhatsApp: +880 1320 723 300</a>`
-    },
-    {
-      keys: ['support','break','fix','after','maintenance','help','problem','issue'],
-      reply: `<strong>We don't disappear after launch.</strong> 🛡️<br><br>
-• All clients get post-launch support<br>
-• Systems built for stability — but when issues occur, we fix them fast<br>
-• Enterprise clients get 24/7 SLA monitoring<br><br>
-Most automation platforms we use have 99.9% uptime. Your system will keep running while you sleep.`
-    },
-    {
-      keys: ['how it works','process','step','start','begin','next','what happens'],
-      reply: `<strong>3 simple steps to go live:</strong><br><br>
-<strong>1. Strategy Call (Free)</strong> — 30 minutes. We learn your business and identify the highest-ROI automations.<br><br>
-<strong>2. We Build (7–14 days)</strong> — Full system built, tested, and configured. You review and approve before anything goes live.<br><br>
-<strong>3. Go Live & Optimize</strong> — System launches. We monitor performance and keep improving it over time.<br><br>
-Ready? <a href="mailto:agencyautomationn@gmail.com" style="color:var(--cyan)">Book your free strategy call →</a>`
-    },
-    {
-      keys: ['contact','reach','email','whatsapp','phone','call','talk','speak'],
-      reply: `Reach us directly:<br><br>
-📧 <strong>Email:</strong> <a href="mailto:agencyautomationn@gmail.com" style="color:var(--cyan)">agencyautomationn@gmail.com</a><br>
-💬 <strong>WhatsApp:</strong> <a href="https://wa.me/8801320723300" target="_blank" style="color:#25D366">+880 1320 723 300</a><br><br>
-We respond within <strong>24 hours</strong> on business days. WhatsApp is fastest.`
-    },
-    {
-      keys: ['who','ibrahim','owner','founder','team','agency','about','company'],
-      reply: `<strong>AgencyAutomation</strong> is run by <strong>MD Ibrahim Khalil</strong> — an AI automation specialist based in Dhaka, Bangladesh, serving clients in the USA, Europe, and globally.<br><br>
-We're a lean, execution-focused agency. No bloated teams. No fluff. Just systems that produce results.<br><br>
-📧 <a href="mailto:agencyautomationn@gmail.com" style="color:var(--cyan)">agencyautomationn@gmail.com</a>`
-    },
-    {
-      keys: ['result','roi','save','hour','lead','revenue','benefit','outcome','result'],
-      reply: `Here's what our clients typically experience:<br><br>
-• ⏱️ <strong>20+ hours saved per week</strong> on manual tasks<br>
-• 📈 <strong>3x increase</strong> in qualified leads<br>
-• 🕐 <strong>24/7 operation</strong> — your system never sleeps<br>
-• 📉 <strong>60% reduction</strong> in no-shows (dental, fitness, consulting clients)<br><br>
-These aren't guarantees — they're real outcomes from real automation deployments. Your results depend on your business, but the ROI is typically clear within the first month.`
-    }
-  ];
+  const OPENAI_KEY = "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";
 
-  const FALLBACK = [
-    `Great question. The best way to get a precise answer is a <strong>free 30-minute strategy call</strong> — we'll walk through exactly how automation applies to your situation.<br><br>📧 <a href="mailto:agencyautomationn@gmail.com" style="color:var(--cyan)">agencyautomationn@gmail.com</a>`,
-    `I might not have a perfect answer for that, but <strong>Ibrahim can</strong>. He responds fast:<br><br>💬 <a href="https://wa.me/8801320723300" target="_blank" style="color:#25D366">WhatsApp → +880 1320 723 300</a>`,
-    `That's a bit outside my knowledge. Try asking about our <strong>services, industries, tools, process, or timelines</strong> — or reach us directly at <a href="mailto:agencyautomationn@gmail.com" style="color:var(--cyan)">agencyautomationn@gmail.com</a>`
-  ];
+  const SYSTEM_PROMPT = `You are AgencyAI, the friendly and knowledgeable assistant for AgencyAutomation (agencyautomation.site).
 
-  let fallbackIndex = 0;
+Owner: MD Ibrahim Khalil | Email: agencyautomationn@gmail.com | WhatsApp: +8801320723300
 
-  function getReply(text) {
-    const lower = text.toLowerCase();
-    for (const item of KB) {
-      if (item.keys.some(k => lower.includes(k))) {
-        return item.reply;
-      }
-    }
-    const reply = FALLBACK[fallbackIndex % FALLBACK.length];
-    fallbackIndex++;
-    return reply;
-  }
+SERVICES:
+1. AI Lead Generation — Scrape, score & nurture leads automatically
+2. WhatsApp Automation — 24/7 bot that qualifies leads & books appointments
+3. CRM Integration — HubSpot, GoHighLevel & 400+ platforms
+4. AI Sales Chatbots — Website bots handling objections & conversions
+5. Cold Email Systems — Personalized AI-written outreach at scale
+6. Workflow Automation — n8n/Make-powered end-to-end automation
+7. Review Management — Auto Google review requests post-service
+8. Appointment Booking — Smart scheduling, zero back-and-forth
+9. Cart Recovery — Abandoned cart follow-up sequences
+10. Document Automation — Auto-generate proposals, contracts, invoices
 
-  // ── DOM Setup ──
-  const btn = document.getElementById('chatbot-btn');
-  const panel = document.getElementById('chatbot-panel');
-  const closeBtn = document.getElementById('chat-close');
-  const messages = document.getElementById('chat-messages');
-  const input = document.getElementById('chat-input');
-  const sendBtn = document.getElementById('chat-send');
-  const notif = btn.querySelector('.notif');
+INDUSTRIES: Dental Clinics, Real Estate, E-Commerce, Restaurants, Gyms & Fitness, Any Business
+
+PROCESS: 1) Free 30-min strategy call → 2) Build in 7-14 days → 3) Go live & optimize
+
+TOOLS WE CONNECT: WhatsApp, Gmail, Google Sheets, HubSpot, GoHighLevel, Shopify, Facebook/Instagram, Calendly, Notion, Slack, Stripe, and 400+ more.
+
+OWNERSHIP: Client owns 100% of everything built. No lock-in.
+
+RESULTS CLIENTS SEE: 20+ hrs/week saved, 3x lead increase, 60% no-show reduction, 30% cart recovery rate.
+
+TONE: Confident, concise, professional. Use bullet points for lists. Always end with a relevant CTA (book a call or contact). Never invent prices or guarantees beyond what's stated.`;
+
+  // DOM
+  const btn       = document.getElementById('chatbot-btn');
+  const panel     = document.getElementById('chatbot-panel');
+  const closeBtn  = document.getElementById('chat-close');
+  const msgBox    = document.getElementById('chat-messages');
+  const input     = document.getElementById('chat-input');
+  const sendBtn   = document.getElementById('chat-send');
+  const notif     = btn.querySelector('.notif');
+
   let isOpen = false;
+  let history = []; // {role, content}
 
   function toggleChat() {
     isOpen = !isOpen;
     panel.classList.toggle('open', isOpen);
-    if (isOpen) {
-      notif.style.display = 'none';
-      setTimeout(() => input.focus(), 400);
-    }
+    if (isOpen) { notif.style.display = 'none'; setTimeout(() => input.focus(), 400); }
   }
-
   btn.addEventListener('click', toggleChat);
   closeBtn.addEventListener('click', toggleChat);
 
-  function appendMessage(html, role) {
-    const bubble = document.createElement('div');
-    bubble.className = 'chat-bubble ' + role;
-    bubble.innerHTML = html;
-    messages.appendChild(bubble);
-    messages.scrollTop = messages.scrollHeight;
+  function appendMsg(html, role) {
+    const b = document.createElement('div');
+    b.className = 'chat-bubble ' + role;
+    b.innerHTML = html;
+    msgBox.appendChild(b);
+    msgBox.scrollTop = msgBox.scrollHeight;
   }
 
   function showTyping() {
     const t = document.createElement('div');
     t.className = 'chat-typing'; t.id = 'typing-indicator';
     t.innerHTML = '<span></span><span></span><span></span>';
-    messages.appendChild(t);
-    messages.scrollTop = messages.scrollHeight;
+    msgBox.appendChild(t);
+    msgBox.scrollTop = msgBox.scrollHeight;
   }
+  function hideTyping() { const t = document.getElementById('typing-indicator'); if (t) t.remove(); }
 
-  function removeTyping() {
-    const t = document.getElementById('typing-indicator');
-    if (t) t.remove();
-  }
-
-  function sendMessage(text) {
+  async function sendMessage(text) {
     if (!text.trim()) return;
-    document.querySelectorAll('.chat-quick-replies').forEach(el => el.remove());
-    appendMessage(text, 'user');
+    document.querySelectorAll('.chat-quick-replies').forEach(e => e.remove());
+    appendMsg(text, 'user');
     input.value = ''; input.style.height = 'auto';
+    history.push({ role: 'user', content: text });
     showTyping();
     sendBtn.disabled = true;
-    // Simulate natural thinking delay
-    const delay = 600 + Math.random() * 700;
-    setTimeout(() => {
-      removeTyping();
-      appendMessage(getReply(text), 'bot');
-      sendBtn.disabled = false;
-      messages.scrollTop = messages.scrollHeight;
-    }, delay);
+
+    try {
+      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + OPENAI_KEY
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o-mini',
+          max_tokens: 500,
+          messages: [
+            { role: 'system', content: SYSTEM_PROMPT },
+            ...history
+          ]
+        })
+      });
+
+      const data = await res.json();
+      const reply = data.choices?.[0]?.message?.content
+        || "Something went wrong — reach us at agencyautomationn@gmail.com";
+
+      history.push({ role: 'assistant', content: reply });
+
+      // Format: convert **bold** and newlines
+      const formatted = reply
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br>');
+
+      hideTyping();
+      appendMsg(formatted, 'bot');
+
+    } catch (err) {
+      hideTyping();
+      appendMsg("Connection issue. Please try again or <a href='mailto:agencyautomationn@gmail.com' style='color:var(--cyan)'>email us directly</a>.", 'bot');
+    }
+
+    sendBtn.disabled = false;
+    msgBox.scrollTop = msgBox.scrollHeight;
   }
 
   window.sendQuickReply = function(el) { sendMessage(el.textContent); };
-
   sendBtn.addEventListener('click', () => sendMessage(input.value));
   input.addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(input.value); }
