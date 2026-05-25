@@ -2843,43 +2843,246 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <script>
-(function() {
-  // ─────────────────────────────────────────────────────────────
-  //  FREE GROQ API — Get your key at https://console.groq.com
-  //  Sign up is FREE, no credit card needed.
-  //  Replace the value below with your own Groq API key.
-  // ─────────────────────────────────────────────────────────────
-  const GROQ_KEY = "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"; // 👈 paste your key here
+(function () {
 
-  const SYSTEM_PROMPT = `You are AgencyAI, the friendly and knowledgeable assistant for AgencyAutomation (agencyautomation.site).
+  // ═══════════════════════════════════════════════════════════
+  //  AGENCYAI — SMART RULE-BASED CHATBOT (Zero API, Zero Cost)
+  // ═══════════════════════════════════════════════════════════
 
-Owner: MD Ibrahim Khalil | Email: agencyautomationn@gmail.com | WhatsApp: +8801320723300
+  const KB = [
 
-SERVICES:
-1. AI Lead Generation — Scrape, score & nurture leads automatically
-2. WhatsApp Automation — 24/7 bot that qualifies leads & books appointments
-3. CRM Integration — HubSpot, GoHighLevel & 400+ platforms
-4. AI Sales Chatbots — Website bots handling objections & conversions
-5. Cold Email Systems — Personalized AI-written outreach at scale
-6. Workflow Automation — n8n/Make-powered end-to-end automation
-7. Review Management — Auto Google review requests post-service
-8. Appointment Booking — Smart scheduling, zero back-and-forth
-9. Cart Recovery — Abandoned cart follow-up sequences
-10. Document Automation — Auto-generate proposals, contracts, invoices
+    // ── GREETINGS ──
+    {
+      keys: ['hello','hi','hey','good morning','good afternoon','good evening','sup','what\'s up','howdy','salaam','assalamu'],
+      answers: [
+        "Hey there! 👋 I'm <strong>AgencyAI</strong>, the assistant for AgencyAutomation.<br><br>I can tell you about our services, industries we work with, who we are, or how to get started. What would you like to know?",
+        "Hello! Great to meet you. 😊<br><br>I'm here to answer anything about <strong>AgencyAutomation</strong> — our services, process, tools, or how we can help your business. What's on your mind?",
+        "Hi! Welcome to AgencyAutomation. 🚀<br><br>Ask me anything — services, pricing info, how we work, or just say <em>'What can you do for me?'</em>"
+      ]
+    },
 
-INDUSTRIES: Dental Clinics, Real Estate, E-Commerce, Restaurants, Gyms & Fitness, Any Business
+    // ── WHO / ABOUT / OWNER ──
+    {
+      keys: ['who are you','about you','about agency','who is ibrahim','who built','who made','owner','founder','ibrahim','md ibrahim','khalil','tell me about'],
+      answers: [
+        "We're <strong>AgencyAutomation</strong> — an AI automation agency that builds systems saving businesses <strong>20+ hours per week</strong> while tripling their leads. 💜<br><br><strong>Founded by:</strong> MD Ibrahim Khalil<br><strong>Email:</strong> agencyautomationn@gmail.com<br><strong>WhatsApp:</strong> +8801320723300<br><br>We design, build, and deploy AI-powered workflows so you can scale without hiring more staff.",
+        "<strong>AgencyAutomation</strong> was built by <strong>MD Ibrahim Khalil</strong> to help businesses automate the repetitive work that eats up their time and money.<br><br>We specialize in WhatsApp bots, AI lead generation, CRM integrations, and full workflow automation — for any industry. 🤖<br><br>📧 agencyautomationn@gmail.com | 📱 +8801320723300"
+      ]
+    },
 
-PROCESS: 1) Free 30-min strategy call → 2) Build in 7-14 days → 3) Go live & optimize
+    // ── ALL SERVICES ──
+    {
+      keys: ['services','what do you do','what you offer','offer','all service','list service','your service','what can you','everything'],
+      answers: [
+        "Here's everything we build for you: 🛠️<br><br>1️⃣ <strong>AI Lead Generation</strong> — Scrape, score & nurture leads automatically<br>2️⃣ <strong>WhatsApp Automation</strong> — 24/7 bot that qualifies leads & books appointments<br>3️⃣ <strong>CRM Integration</strong> — HubSpot, GoHighLevel & 400+ platforms<br>4️⃣ <strong>AI Sales Chatbots</strong> — Website bots handling objections & conversions<br>5️⃣ <strong>Cold Email Systems</strong> — Personalized AI-written outreach at scale<br>6️⃣ <strong>Workflow Automation</strong> — n8n/Make-powered end-to-end automation<br>7️⃣ <strong>Review Management</strong> — Auto Google review requests post-service<br>8️⃣ <strong>Appointment Booking</strong> — Smart scheduling, zero back-and-forth<br>9️⃣ <strong>Cart Recovery</strong> — Abandoned cart follow-up sequences<br>🔟 <strong>Document Automation</strong> — Auto-generate proposals, contracts, invoices<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Book a free 30-min strategy call</a> to find out which ones fit your business."
+      ]
+    },
 
-TOOLS WE CONNECT: WhatsApp, Gmail, Google Sheets, HubSpot, GoHighLevel, Shopify, Facebook/Instagram, Calendly, Notion, Slack, Stripe, and 400+ more.
+    // ── WHATSAPP ──
+    {
+      keys: ['whatsapp','whatsapp bot','whatsapp automation','wa bot','wa automation'],
+      answers: [
+        "<strong>WhatsApp Automation</strong> is one of our most popular services! 📱<br><br>We build a 24/7 WhatsApp bot that:<br>• Automatically qualifies incoming leads<br>• Books appointments without you lifting a finger<br>• Follows up with prospects who go cold<br>• Handles FAQs instantly — any time of day<br><br>Result: <strong>60% reduction in no-shows</strong> + leads never fall through the cracks.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Chat with us on WhatsApp</a> to see a live demo."
+      ]
+    },
 
-OWNERSHIP: Client owns 100% of everything built. No lock-in.
+    // ── LEAD GENERATION ──
+    {
+      keys: ['lead','lead generation','leads','generate leads','more leads','get leads'],
+      answers: [
+        "Our <strong>AI Lead Generation</strong> system works on autopilot 24/7 🎯<br><br>Here's what it does:<br>• Scrapes targeted leads from the web automatically<br>• Scores them by buying intent so you focus on the best ones<br>• Nurtures cold leads with personalized follow-up sequences<br>• Feeds hot leads directly into your CRM<br><br>Clients typically see a <strong>3x increase in qualified leads</strong> within 30 days.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Book a free call</a> to see how many leads your market has."
+      ]
+    },
 
-RESULTS CLIENTS SEE: 20+ hrs/week saved, 3x lead increase, 60% no-show reduction, 30% cart recovery rate.
+    // ── CRM ──
+    {
+      keys: ['crm','hubspot','gohighlevel','ghl','salesforce','integration','integrate','connect crm'],
+      answers: [
+        "We handle <strong>CRM Integration</strong> with 400+ platforms! 🔗<br><br>Popular ones we work with:<br>• HubSpot<br>• GoHighLevel (GHL)<br>• Salesforce<br>• Zoho<br>• Pipedrive<br>• + 400 more via Zapier / Make / n8n<br><br>We connect your CRM to WhatsApp, email, booking systems, Google Sheets, and more — so everything syncs automatically with zero manual data entry.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Tell us what tools you use</a> and we'll map out the integration."
+      ]
+    },
 
-TONE: Confident, concise, professional. Use bullet points for lists. Always end with a relevant CTA (book a call or contact). Never invent prices or guarantees beyond what's stated.`;
+    // ── CHATBOT / AI SALES BOT ──
+    {
+      keys: ['chatbot','chat bot','sales bot','ai bot','website bot','website chatbot','ai chatbot'],
+      answers: [
+        "Our <strong>AI Sales Chatbots</strong> turn website visitors into paying customers! 💬<br><br>Your bot will:<br>• Answer questions instantly 24/7<br>• Handle objections automatically<br>• Qualify leads and collect contact info<br>• Book calls or demos right from the chat<br>• Escalate hot leads to your team<br><br>No more losing visitors who leave without contacting you.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Get your chatbot built</a> — goes live in 7-14 days."
+      ]
+    },
 
-  // DOM
+    // ── COLD EMAIL ──
+    {
+      keys: ['cold email','email outreach','email marketing','email automation','cold outreach','email campaign'],
+      answers: [
+        "Our <strong>Cold Email System</strong> runs personalized outreach at scale! 📧<br><br>What's included:<br>• AI writes personalized emails for each prospect<br>• Automated follow-up sequences (3-5 touches)<br>• Domain warm-up to avoid spam folders<br>• Real-time reply detection & CRM logging<br>• A/B testing to optimize open rates<br><br>You get a consistent pipeline of booked meetings — without spending hours writing emails.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Book a call</a> to start your outreach campaign."
+      ]
+    },
+
+    // ── WORKFLOW / N8N / MAKE ──
+    {
+      keys: ['workflow','automation','n8n','make','zapier','automate','workflow automation','process automation'],
+      answers: [
+        "<strong>Workflow Automation</strong> is the backbone of everything we build! ⚙️<br><br>We use <strong>n8n</strong> and <strong>Make (Integromat)</strong> to connect all your tools and automate repetitive tasks:<br>• Auto-assign leads to sales reps<br>• Trigger follow-ups based on actions<br>• Sync data across all platforms<br>• Send notifications to your team<br>• Generate reports automatically<br><br>If it's repetitive, we automate it. Our clients save <strong>20+ hours per week</strong>.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Tell us your workflow</a> and we'll automate it."
+      ]
+    },
+
+    // ── REVIEWS ──
+    {
+      keys: ['review','google review','reputation','review management','reviews'],
+      answers: [
+        "Our <strong>Review Management</strong> system builds your reputation on autopilot! ⭐<br><br>After every service or purchase, we automatically:<br>• Send a review request via WhatsApp or SMS<br>• Follow up once if no response<br>• Direct happy customers to Google / Facebook<br>• Alert you about negative feedback before it goes public<br><br>More 5-star reviews = more trust = more customers.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Get started</a> — this usually takes less than a week to set up."
+      ]
+    },
+
+    // ── APPOINTMENTS / BOOKING ──
+    {
+      keys: ['appointment','booking','schedule','calendly','book','calendar','no-show','no show'],
+      answers: [
+        "Our <strong>Appointment Booking Automation</strong> eliminates back-and-forth forever! 📅<br><br>Here's how it works:<br>• AI qualifies the lead first<br>• Automatically offers available time slots<br>• Sends confirmation + reminders via WhatsApp/email<br>• Reduces no-shows by <strong>up to 60%</strong><br>• Syncs with Google Calendar, Calendly & more<br><br>Your calendar fills itself. You just show up.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Book a free strategy call</a> to set this up for your business."
+      ]
+    },
+
+    // ── CART RECOVERY ──
+    {
+      keys: ['cart','cart recovery','abandoned','abandon','ecommerce cart','shopify cart','recover'],
+      answers: [
+        "Our <strong>Cart Recovery Automation</strong> wins back lost sales automatically! 🛒<br><br>When a customer abandons their cart:<br>1. Instant WhatsApp/email reminder (within 30 mins)<br>2. Second follow-up with a soft incentive (24 hrs)<br>3. Final reminder (48 hrs)<br><br>Average recovery rate: <strong>30% of abandoned carts</strong>.<br><br>For most e-commerce stores, this alone pays for the entire automation within days.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Let's set this up</a> for your store."
+      ]
+    },
+
+    // ── DOCUMENT AUTOMATION ──
+    {
+      keys: ['document','proposal','contract','invoice','doc automation','document automation','auto generate','paperwork'],
+      answers: [
+        "Our <strong>Document Automation</strong> system handles all your paperwork! 📄<br><br>We automate:<br>• Proposals — generated from your CRM data automatically<br>• Contracts — sent for e-signature without manual work<br>• Invoices — created and sent after booking or purchase<br>• Reports — scheduled and sent to your inbox<br><br>Zero manual document creation. Everything flows from your data automatically.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Talk to us</a> about your document workflow."
+      ]
+    },
+
+    // ── INDUSTRIES ──
+    {
+      keys: ['industry','industries','dental','dentist','clinic','real estate','restaurant','gym','fitness','ecommerce','e-commerce','shopify','business','who do you work with','what business'],
+      answers: [
+        "We work with businesses across all industries! 🏢<br><br><strong>Our specialties:</strong><br>🦷 <strong>Dental Clinics</strong> — Appointment booking, no-show reduction, review generation<br>🏠 <strong>Real Estate</strong> — Lead qualification, follow-up sequences, CRM sync<br>🛍️ <strong>E-Commerce</strong> — Cart recovery, post-purchase flows, review requests<br>🍽️ <strong>Restaurants</strong> — Reservation bots, feedback collection, loyalty sequences<br>💪 <strong>Gyms & Fitness</strong> — Lead nurturing, membership follow-ups, class bookings<br>🏢 <strong>Any Business</strong> — If you have repetitive tasks, we automate them<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Book a free call</a> — we'll tailor a solution for your industry."
+      ]
+    },
+
+    // ── TOOLS / INTEGRATIONS ──
+    {
+      keys: ['tools','tool','connect','platform','integration','what tools','slack','notion','stripe','shopify','gmail','google sheet','facebook','instagram','calendly'],
+      answers: [
+        "We connect to <strong>400+ platforms</strong>! 🔌<br><br>Most popular integrations:<br>• 📱 WhatsApp & Telegram<br>• 📧 Gmail & Outlook<br>• 📊 Google Sheets & Airtable<br>• 💼 HubSpot & GoHighLevel<br>• 🛍️ Shopify & WooCommerce<br>• 📘 Facebook & Instagram<br>• 📅 Calendly & Google Calendar<br>• 💳 Stripe & PayPal<br>• 💬 Slack & Notion<br>• ⚡ + 400 more via n8n / Make / Zapier<br><br>If you use it, we can connect it. 👉 <a href='#contact' style='color:var(--cyan)'>Tell us your stack.</a>"
+      ]
+    },
+
+    // ── PROCESS / HOW IT WORKS ──
+    {
+      keys: ['how does it work','process','how do you work','steps','how to start','get started','how to get','onboarding','next step'],
+      answers: [
+        "Our process is simple — just 3 steps: 🚀<br><br><strong>Step 1 — Free Strategy Call (30 min)</strong><br>We learn about your business, identify the highest-impact automations, and map out a custom plan.<br><br><strong>Step 2 — We Build It (7-14 days)</strong><br>Our team designs, builds, and tests your complete automation system. You review and approve.<br><br><strong>Step 3 — Go Live & Optimize</strong><br>We launch your system, train you to use it, and keep optimizing for better results.<br><br>✅ You own 100% of everything we build. No lock-in. Ever.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Book your free strategy call</a> today."
+      ]
+    },
+
+    // ── TIMELINE / HOW FAST ──
+    {
+      keys: ['how fast','how long','timeline','days','week','delivery','when','deadline','how quick','fast','quick'],
+      answers: [
+        "Most systems go live in <strong>7-14 days</strong>! ⚡<br><br>Here's the typical timeline:<br>• Day 1-2: Strategy call + planning<br>• Day 3-10: Build & internal testing<br>• Day 11-14: Your review + launch<br><br>Simpler automations (like review requests or booking bots) can go live in as little as <strong>3-5 days</strong>.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Book a call today</a> and tell us your deadline — we'll make it happen."
+      ]
+    },
+
+    // ── CODING / TECHNICAL SKILLS ──
+    {
+      keys: ['coding','code','technical','developer','tech','do i need','need to know','technical skill','programming'],
+      answers: [
+        "<strong>Zero coding skills needed!</strong> 🙌<br><br>We handle 100% of the technical work. You just:<br>✅ Tell us what you want to automate<br>✅ Give us access to your tools<br>✅ Review and approve the system<br>✅ Press go<br><br>After launch, everything runs automatically. No technical knowledge required to use or maintain it.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Book a free call</a> — no tech talk, just results."
+      ]
+    },
+
+    // ── PRICING / COST ──
+    {
+      keys: ['price','pricing','cost','how much','fee','charge','rate','package','plan','affordable','cheap','expensive','budget'],
+      answers: [
+        "Our pricing is <strong>custom to your needs</strong> — we don't do one-size-fits-all packages. 💰<br><br>Pricing depends on:<br>• Number of automations needed<br>• Complexity of your existing tools<br>• Scale of your business<br><br>What we can promise:<br>✅ Most clients earn back their investment in the <strong>first 30 days</strong><br>✅ You own everything — no recurring agency fees<br>✅ Free 30-min consultation before any commitment<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Book a free strategy call</a> and we'll give you an exact quote."
+      ]
+    },
+
+    // ── RESULTS / ROI ──
+    {
+      keys: ['result','results','roi','return','save time','save money','benefit','outcome','what do i get','guarantee','proof','worth'],
+      answers: [
+        "Here's what our clients typically see: 📈<br><br>⏱️ <strong>20+ hours/week saved</strong> — No more manual tasks<br>🎯 <strong>3x more qualified leads</strong> — Automated follow-up that never sleeps<br>📅 <strong>60% fewer no-shows</strong> — Smart appointment reminders<br>🛒 <strong>30% cart recovery rate</strong> — Winning back abandoned sales<br>⭐ <strong>More 5-star reviews</strong> — Automated review requests<br><br>These aren't promises — they're results from real clients across dental, real estate, e-commerce, and more.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Book a free call</a> to discuss what results you can expect."
+      ]
+    },
+
+    // ── OWNERSHIP ──
+    {
+      keys: ['own','ownership','lock in','lock-in','mine','who owns','keep','after','contract','cancel'],
+      answers: [
+        "<strong>You own 100% of everything we build.</strong> ✅<br><br>This means:<br>• All automations, bots, and workflows are yours<br>• No lock-in contracts<br>• Cancel anytime (but you keep everything)<br>• Full access to your systems — always<br>• We hand over complete documentation<br><br>We believe in earning your business through results, not contracts.<br><br>👉 <a href='#contact' style='color:var(--cyan)'>Book a free call</a> — no strings attached."
+      ]
+    },
+
+    // ── CONTACT / BOOK / CALL ──
+    {
+      keys: ['contact','book','call','schedule call','talk','speak','reach','get in touch','whatsapp me','email','phone','start','hire','work with you'],
+      answers: [
+        "Ready to get started? Let's talk! 🤝<br><br>📧 <strong>Email:</strong> <a href='mailto:agencyautomationn@gmail.com' style='color:var(--cyan)'>agencyautomationn@gmail.com</a><br>📱 <strong>WhatsApp:</strong> <a href='https://wa.me/8801320723300' target='_blank' style='color:var(--cyan)'>+8801320723300</a><br>📅 <strong>Book a call:</strong> <a href='#contact' style='color:var(--cyan)'>Use the contact form below</a><br><br>The first call is <strong>completely free</strong> — 30 minutes to map out your automation strategy with no obligation.",
+        "Here's how to reach us: 📞<br><br>📧 <a href='mailto:agencyautomationn@gmail.com' style='color:var(--cyan)'>agencyautomationn@gmail.com</a><br>📱 <a href='https://wa.me/8801320723300' target='_blank' style='color:var(--cyan)'>WhatsApp: +8801320723300</a><br><br>Or <a href='#contact' style='color:var(--cyan)'>scroll down to the contact form</a> — MD Ibrahim Khalil responds personally within a few hours."
+      ]
+    },
+
+    // ── THANKS / APPRECIATION ──
+    {
+      keys: ['thank','thanks','thank you','thx','appreciate','helpful','great','awesome','nice','good','perfect','excellent','amazing','cool'],
+      answers: [
+        "Happy to help! 😊 That's what I'm here for.<br><br>If you have any more questions about our services or want to get started, feel free to ask — or <a href='#contact' style='color:var(--cyan)'>book a free strategy call</a> with MD Ibrahim Khalil directly.",
+        "Glad that helped! 🙌<br><br>Anything else you'd like to know? Or if you're ready, <a href='#contact' style='color:var(--cyan)'>reach out to us</a> and let's build something great together."
+      ]
+    },
+
+    // ── GOODBYE ──
+    {
+      keys: ['bye','goodbye','see you','later','ok bye','take care','cya'],
+      answers: [
+        "Take care! 👋 Whenever you're ready to automate your business, we're here at <a href='https://wa.me/8801320723300' target='_blank' style='color:var(--cyan)'>WhatsApp</a> or <a href='mailto:agencyautomationn@gmail.com' style='color:var(--cyan)'>email</a>.",
+        "Bye for now! 😊 Remember — <strong>AgencyAutomation</strong> is just a message away when you're ready to scale."
+      ]
+    }
+  ];
+
+  // ── Fallback responses ──
+  const FALLBACKS = [
+    "Great question! I'm best at answering about our services, industries, process, tools, and pricing. Could you rephrase, or ask something like:<br><br>• <em>\"What services do you offer?\"</em><br>• <em>\"How fast can you go live?\"</em><br>• <em>\"How do I contact you?\"</em>",
+    "I'm not sure I caught that! 🤔 Try asking about:<br><br>• Our <strong>services</strong> (WhatsApp bot, lead gen, CRM...)<br>• <strong>Industries</strong> we work with<br>• Our <strong>process</strong> and timeline<br>• How to <strong>get started</strong><br><br>Or <a href='#contact' style='color:var(--cyan)'>contact MD Ibrahim directly</a> for anything specific.",
+    "Hmm, I didn't get that one! I can answer about our automation services, pricing, timeline, tools, and more. What would you like to know? 😊"
+  ];
+
+  // ── Match engine ──
+  let fallbackIndex = 0;
+  function getReply(text) {
+    const q = text.toLowerCase().replace(/[^a-z0-9\s']/g, ' ');
+    const words = q.split(/\s+/);
+
+    let bestMatch = null;
+    let bestScore = 0;
+
+    for (const entry of KB) {
+      let score = 0;
+      for (const kw of entry.keys) {
+        if (q.includes(kw)) score += kw.split(' ').length * 2; // phrase match = higher score
+        else for (const w of words) if (kw === w) score += 1;
+      }
+      if (score > bestScore) { bestScore = score; bestMatch = entry; }
+    }
+
+    if (bestMatch && bestScore > 0) {
+      const pool = bestMatch.answers;
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+    return FALLBACKS[fallbackIndex++ % FALLBACKS.length];
+  }
+
+  // ── DOM ──
   const btn      = document.getElementById('chatbot-btn');
   const panel    = document.getElementById('chatbot-panel');
   const closeBtn = document.getElementById('chat-close');
@@ -2888,8 +3091,7 @@ TONE: Confident, concise, professional. Use bullet points for lists. Always end 
   const sendBtn  = document.getElementById('chat-send');
   const notif    = btn.querySelector('.notif');
 
-  let isOpen  = false;
-  let history = [];
+  let isOpen = false;
 
   function toggleChat() {
     isOpen = !isOpen;
@@ -2916,76 +3118,23 @@ TONE: Confident, concise, professional. Use bullet points for lists. Always end 
   }
   function hideTyping() { const t = document.getElementById('typing-indicator'); if (t) t.remove(); }
 
-  function formatReply(text) {
-    return text
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/^#{1,3}\s(.+)$/gm, '<strong>$1</strong>')
-      .replace(/^[-•]\s(.+)$/gm, '• $1')
-      .replace(/\n/g, '<br>');
-  }
-
-  async function sendMessage(text) {
+  function sendMessage(text) {
     text = text.trim();
     if (!text) return;
-
     document.querySelectorAll('.chat-quick-replies').forEach(e => e.remove());
     appendMsg(text, 'user');
     input.value = ''; input.style.height = 'auto';
-    history.push({ role: 'user', content: text });
-    showTyping();
     sendBtn.disabled = true;
+    showTyping();
 
-    // Guard: key not set yet
-    if (!GROQ_KEY || GROQ_KEY === 'YOUR_GROQ_API_KEY_HERE') {
+    // Simulate human typing delay (500–1200ms)
+    const delay = 500 + Math.random() * 700;
+    setTimeout(() => {
       hideTyping();
-      appendMsg("⚙️ Chatbot not configured yet. <br>Owner: please add your free Groq API key. Get one free at <a href='https://console.groq.com' target='_blank' style='color:var(--cyan)'>console.groq.com</a>", 'bot');
+      appendMsg(getReply(text), 'bot');
       sendBtn.disabled = false;
-      return;
-    }
-
-    try {
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + GROQ_KEY
-        },
-        body: JSON.stringify({
-          model: 'llama3-70b-8192',   // Best free Groq model — very human-like
-          max_tokens: 600,
-          temperature: 0.7,
-          messages: [
-            { role: 'system', content: SYSTEM_PROMPT },
-            ...history
-          ]
-        })
-      });
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData?.error?.message || 'API error ' + res.status);
-      }
-
-      const data  = await res.json();
-      const reply = data.choices?.[0]?.message?.content
-        || "Something went wrong — reach us at agencyautomationn@gmail.com";
-
-      history.push({ role: 'assistant', content: reply });
-      hideTyping();
-      appendMsg(formatReply(reply), 'bot');
-
-    } catch (err) {
-      hideTyping();
-      console.error('AgencyAI error:', err.message);
-      appendMsg(
-        "Connection issue. Please try again or <a href='mailto:agencyautomationn@gmail.com' style='color:var(--cyan)'>email us directly</a>.",
-        'bot'
-      );
-    }
-
-    sendBtn.disabled = false;
-    msgBox.scrollTop = msgBox.scrollHeight;
+      msgBox.scrollTop = msgBox.scrollHeight;
+    }, delay);
   }
 
   window.sendQuickReply = function(el) { sendMessage(el.textContent); };
@@ -2997,6 +3146,7 @@ TONE: Confident, concise, professional. Use bullet points for lists. Always end 
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 80) + 'px';
   });
+
 })();
 </script>
 </body>
